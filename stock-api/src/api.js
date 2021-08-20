@@ -5,3 +5,5 @@ const ALL_COINS =
 
 export const getAllCoinsURL = () => `${BASE_URL}${ALL_COINS}`;
 export const getCoinDataURL = (id) => `${BASE_URL}${id}`;
+export const getChartDataURL = (id) =>
+  `${BASE_URL}${id}/market_chart?vs_currency=gbp&days=1&interval=hourly`;

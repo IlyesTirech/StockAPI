@@ -6,7 +6,8 @@ import Coins from './components/Coins';
 import Header from './components/Header';
 import Search from './components/Search';
 import Details from './components/Details';
-import Chart from './components/Chart';
+import CoinChart from './components/CoinChart';
+import Coin from './components/Coin';
 const App = () => {
   const dispatch = useDispatch();
 
