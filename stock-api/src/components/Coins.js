@@ -1,28 +1,29 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { loadCoins } from '../actions/coinAction';
 import Coin from './Coin';
 import Search from './Search';
 import Subheadings from './Subheadings';
 const Coins = () => {
-  const dispatch = useDispatch();
-
   const [search, setSearch] = useState('');
-
+  const [coins, setCoins] = useState([]);
   useEffect(() => {
-    dispatch(loadCoins());
-  }, [dispatch]);
-
+    axios
+      .get(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=100&page=1&sparkline=false'
+      )
+      .then((res) => {
+        setCoins(res.data);
+      });
+  }, []);
+  console.log(coins);
   const onChangeHandler = (e) => {
     setSearch(e.target.value);
   };
 
-  const { allCoins } = useSelector((state) => state.coins);
-
-  const filterCoins = allCoins.filter((coin) =>
+  const filterCoins = coins.filter((coin) =>
     coin.name.toLowerCase().includes(search.toLowerCase())
   );
   return (

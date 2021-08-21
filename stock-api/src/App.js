@@ -16,10 +16,9 @@ const App = () => {
   }, [dispatch]);
   return (
     <div>
+      <Header />
       <Switch>
         <Route exact path='/'>
-          <Header />
-
           <Coins />
         </Route>
         <Route path='/details/:id' component={Details}></Route>

@@ -1,42 +1,34 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import {
-  XYPlot,
-  XAxis,
-  YAxis,
-  HorizontalGridLines,
-  LineSeries,
-  AreaSeries,
-  VerticalBarSeries,
-  MarkSeries,
-  LineMarkSeries,
-} from 'react-vis';
+import { XYPlot, XAxis, YAxis, LineSeries } from 'react-vis';
 import styled from 'styled-components';
 
-const VisChart = ({ chart, detail }) => {
-  const onMouseMove = () => {};
+const VisChart = ({ chart }) => {
   return (
-    <XYPlot
-      // onMouseMove={}
-      width={1500}
-      height={400}
-      margin={{ left: 100 }}
-      color='black'
-      xType='time'
-    >
-      <YAxis tickFormat={(v) => `${v.toString().slice(0, 2)}k`} title='GBP' />
-      <XAxis title='Time' />
+    <ChartStyled>
+      <XYPlot
+        width={1500}
+        height={500}
+        margin={{ left: 480 }}
+        color='black'
+        xType='time'
+      >
+        <YAxis tickFormat={(v) => `${v.toString()}`} title='GBP' />
+        <XAxis title='Time' />
 
-      <LineSeries
-        data={chart}
-        curve={'curveMonotoneX'}
-        style={{
-          strokeLinejoin: 'round',
-          strokeWidth: '0.5px',
-        }}
-      />
-    </XYPlot>
+        <LineSeries
+          data={chart}
+          curve={'curveMonotoneX'}
+          style={{
+            strokeLinejoin: 'round',
+            strokeWidth: '0.5px',
+          }}
+        />
+      </XYPlot>
+    </ChartStyled>
   );
 };
-
+const ChartStyled = styled.div`
+  margin-top: 20px;
+`;
 export default VisChart;

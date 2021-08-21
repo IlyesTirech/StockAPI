@@ -21,7 +21,7 @@ const StyledSearch = styled.div`
     width: 100%;
     padding: 1rem;
     outline: none;
-    background-color: #b9b9b9;
+    background-color: #dadada;
     border: none;
     margin-top: 10px;
   }
