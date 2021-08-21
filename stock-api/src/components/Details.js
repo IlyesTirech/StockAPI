@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import VisChart from './VisChart';
 import axios from 'axios';
@@ -54,8 +53,6 @@ const Details = ({ match }) => {
         setChart(loopData(res.data.prices));
       });
   }, [match]);
-
-  console.log(chart);
 
   return (
     <DetailStyled>

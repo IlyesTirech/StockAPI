@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 import { XYPlot, XAxis, YAxis, LineSeries } from 'react-vis';
 import styled from 'styled-components';
 
