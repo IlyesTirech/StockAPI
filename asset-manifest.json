@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/StockAPI/static/css/main.ee2e1c67.chunk.css",
+    "main.js": "/StockAPI/static/js/main.d223c590.chunk.js",
+    "main.js.map": "/StockAPI/static/js/main.d223c590.chunk.js.map",
+    "runtime-main.js": "/StockAPI/static/js/runtime-main.c18635dd.js",
+    "runtime-main.js.map": "/StockAPI/static/js/runtime-main.c18635dd.js.map",
+    "static/js/2.cd25f3e4.chunk.js": "/StockAPI/static/js/2.cd25f3e4.chunk.js",
+    "static/js/2.cd25f3e4.chunk.js.map": "/StockAPI/static/js/2.cd25f3e4.chunk.js.map",
+    "static/js/3.eed2dfd0.chunk.js": "/StockAPI/static/js/3.eed2dfd0.chunk.js",
+    "static/js/3.eed2dfd0.chunk.js.map": "/StockAPI/static/js/3.eed2dfd0.chunk.js.map",
+    "index.html": "/StockAPI/index.html",
+    "static/css/main.ee2e1c67.chunk.css.map": "/StockAPI/static/css/main.ee2e1c67.chunk.css.map",
+    "static/js/2.cd25f3e4.chunk.js.LICENSE.txt": "/StockAPI/static/js/2.cd25f3e4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c18635dd.js",
+    "static/js/2.cd25f3e4.chunk.js",
+    "static/css/main.ee2e1c67.chunk.css",
+    "static/js/main.d223c590.chunk.js"
+  ]
+}
