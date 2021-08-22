@@ -9,7 +9,7 @@ const App = () => {
     <div>
       <Header />
       <Switch>
-        <Route exact path='/StockAPI'>
+        <Route exact path='/'>
           <Coins />
         </Route>
         <Route path='/details/:id' component={Details}></Route>
