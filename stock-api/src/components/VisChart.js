@@ -1,27 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { XYPlot, XAxis, YAxis, LineSeries } from 'react-vis';
 import styled from 'styled-components';
 
 const VisChart = ({ chart, currency }) => {
-  const [title, setTitle] = useState('gbp');
-  const TitleChange = () => {
-    if (currency === 'gbp') {
-      setTitle('gbp');
-    } else if (currency === 'usd') {
-      setTitle('usd');
-    }
-  };
-  console.log(title);
   return (
     <ChartStyled>
       <XYPlot
         width={1500}
         height={500}
-        margin={{ left: 480 }}
+        margin={{ left: 100 }}
         color='black'
         xType='time'
       >
-        <YAxis tickFormat={(v) => `${v.toString()}`} title={title} />
+        <YAxis tickFormat={(v) => `${v.toString()}`} title={currency} />
         <XAxis title='Time' />
 
         <LineSeries

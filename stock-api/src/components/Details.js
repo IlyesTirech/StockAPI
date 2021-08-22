@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import VisChart from './VisChart';
 import axios from 'axios';
 import { FormControl, Select, MenuItem } from '@material-ui/core';
+import Loader from './Loader';
 const Details = ({ match }) => {
   const [details, setDetails] = useState({});
   const [chart, setChart] = useState([]);
-  const [coins, setCoins] = useState([]);
   const [currency, setCurrency] = useState('gbp');
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const onCurrencyChangeHandler = (e) => {
     setCurrency(e.target.value);
   };
@@ -56,9 +57,12 @@ const Details = ({ match }) => {
             oy: price_change_percentage_1y,
           });
         }
-      });
+        setLoading(false);
+      })
+      .catch((error) => setError(true));
   }, [match, currency]);
   console.log(details);
+
   useEffect(() => {
     axios
       .get(
@@ -74,63 +78,83 @@ const Details = ({ match }) => {
           return data;
         };
         setChart(loopData(res.data.prices));
-      });
+      })
+      .catch((error) => setError(true));
   }, [match, currency]);
 
   return (
     <DetailStyled>
       <Container>
-        <FormControl className='dropdown'>
-          <Select
-            variant='outlined'
-            value={currency}
-            onChange={onCurrencyChangeHandler}
-          >
-            <MenuItem value='gbp'>gbp</MenuItem>
-            <MenuItem value='usd'>usd</MenuItem>
-          </Select>
-        </FormControl>
-        <TitleStyled>
-          <img src={details.img} alt={details.name} />
-          <h1>{details.name}</h1>
-        </TitleStyled>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <h2>Error has been found!</h2>
+        ) : (
+          <div>
+            <FormControl className='dropdown'>
+              <Select
+                variant='outlined'
+                value={currency}
+                onChange={onCurrencyChangeHandler}
+              >
+                <MenuItem value='gbp'>gbp</MenuItem>
+                <MenuItem value='usd'>usd</MenuItem>
+              </Select>
+            </FormControl>
+            <TitleStyled>
+              <img src={details.img} alt={details.name} />
+              <h1>{details.name}</h1>
+            </TitleStyled>
 
-        <p>{details.desc}</p>
-        <Row id='rows'>
-          <Card id='cards'>
-            {currency === 'gbp' ? (
-              <Col>Current Price: £{details.cp_gbp}</Col>
-            ) : (
-              <Col>Current Price: ${details.cp_usd}</Col>
-            )}
-          </Card>
-          <Card id='cards'>
-            {currency === 'gbp' ? (
-              <Col>Market Cap: £{details.mc_gbp}</Col>
-            ) : (
-              <Col>Market Cap: ${details.mc_usd}</Col>
-            )}
-          </Card>
-        </Row>
-        <Row id='rows'>
-          <Card id='cards'>
-            <Col>Total Supply: {details.ts}</Col>
-          </Card>
-          <Card id='cards'>
-            <Col>24h % : {details.tfh}%</Col>
-          </Card>
-        </Row>
-        <Row id='rows'>
-          <Card id='cards'>
-            <Col>7d % : {details.sd}%</Col>
-          </Card>
-          <Card id='cards'>
-            <Col>1y %: {details.oy}%</Col>
-          </Card>
-        </Row>
+            <p>{details.desc}</p>
+            <Row id='rows'>
+              <Card id='cards'>
+                {currency === 'gbp' ? (
+                  <Col>Current Price: £{details.cp_gbp}</Col>
+                ) : (
+                  <Col>Current Price: ${details.cp_usd}</Col>
+                )}
+              </Card>
+              <Card id='cards'>
+                {currency === 'gbp' ? (
+                  <Col>Market Cap: £{details.mc_gbp}</Col>
+                ) : (
+                  <Col>Market Cap: ${details.mc_usd}</Col>
+                )}
+              </Card>
+            </Row>
+            <Row id='rows'>
+              <Card id='cards'>
+                <Col>Total Supply: {details.ts}</Col>
+              </Card>
+              <Card id='cards'>
+                {details.tfh < 0 ? (
+                  <Col style={{ color: 'red' }}>24h % : {details.tfh}%</Col>
+                ) : (
+                  <Col style={{ color: 'green' }}>24h % : {details.tfh}%</Col>
+                )}
+              </Card>
+            </Row>
+            <Row id='rows'>
+              <Card id='cards'>
+                {details.sd < 0 ? (
+                  <Col style={{ color: 'red' }}>7d % : {details.sd}%</Col>
+                ) : (
+                  <Col style={{ color: 'green' }}>7d % : {details.sd}%</Col>
+                )}
+              </Card>
+              <Card id='cards'>
+                {details.oy < 0 ? (
+                  <Col style={{ color: 'red' }}>1y %: {details.oy}%</Col>
+                ) : (
+                  <Col style={{ color: 'green' }}>1y %: {details.oy}%</Col>
+                )}
+              </Card>
+            </Row>
+          </div>
+        )}
+        <VisChart chart={chart} details={details} currency={currency} />
       </Container>
-
-      <VisChart chart={chart} details={details} currency={currency} />
     </DetailStyled>
   );
 };
@@ -161,6 +185,7 @@ const DetailStyled = styled.div`
     display: flex;
     align-items: center;
     margin-top: 10px;
+    margin-left: 76rem;
   }
 `;
 export default Details;

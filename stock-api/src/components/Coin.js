@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 const Coin = ({
@@ -56,8 +56,5 @@ const CardStyled = styled.div`
     width: 60px;
   }
 `;
-const CardBodyStyled = styled.div`
-  strong {
-  }
-`;
+
 export default Coin;
