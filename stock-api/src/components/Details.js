@@ -3,9 +3,16 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import VisChart from './VisChart';
 import axios from 'axios';
+import { FormControl, Select, MenuItem } from '@material-ui/core';
 const Details = ({ match }) => {
   const [details, setDetails] = useState({});
   const [chart, setChart] = useState([]);
+  const [coins, setCoins] = useState([]);
+  const [currency, setCurrency] = useState('gbp');
+
+  const onCurrencyChangeHandler = (e) => {
+    setCurrency(e.target.value);
+  };
 
   useEffect(() => {
     axios
@@ -22,24 +29,40 @@ const Details = ({ match }) => {
           price_change_percentage_7d,
           price_change_percentage_1y,
         } = market_data;
-        setDetails({
-          name,
-          img: image.small,
-          desc: description.en,
-          cp_gbp: current_price.gbp,
-          mc_gbp: market_cap.gbp,
-          ts: total_supply,
-          tfh: price_change_percentage_24h,
-          sd: price_change_percentage_7d,
-          oy: price_change_percentage_1y,
-        });
+        if (currency === 'gbp') {
+          setCurrency('gbp');
+          setDetails({
+            name,
+            img: image.small,
+            desc: description.en,
+            cp_gbp: current_price.gbp,
+            mc_gbp: market_cap.gbp,
+            ts: total_supply,
+            tfh: price_change_percentage_24h,
+            sd: price_change_percentage_7d,
+            oy: price_change_percentage_1y,
+          });
+        } else {
+          setCurrency('usd');
+          setDetails({
+            name,
+            img: image.small,
+            desc: description.en,
+            cp_usd: current_price.usd,
+            mc_usd: market_cap.usd,
+            ts: total_supply,
+            tfh: price_change_percentage_24h,
+            sd: price_change_percentage_7d,
+            oy: price_change_percentage_1y,
+          });
+        }
       });
-  }, [match]);
-
+  }, [match, currency]);
+  console.log(details);
   useEffect(() => {
     axios
       .get(
-        `https://api.coingecko.com/api/v3/coins/${match.params.id}/market_chart?vs_currency=gbp&days=1&interval=hourly`
+        `https://api.coingecko.com/api/v3/coins/${match.params.id}/market_chart?vs_currency=${currency}&days=1&interval=hourly`
       )
       .then((res) => {
         const loopData = (chart) => {
@@ -52,11 +75,21 @@ const Details = ({ match }) => {
         };
         setChart(loopData(res.data.prices));
       });
-  }, [match]);
+  }, [match, currency]);
 
   return (
     <DetailStyled>
       <Container>
+        <FormControl className='dropdown'>
+          <Select
+            variant='outlined'
+            value={currency}
+            onChange={onCurrencyChangeHandler}
+          >
+            <MenuItem value='gbp'>gbp</MenuItem>
+            <MenuItem value='usd'>usd</MenuItem>
+          </Select>
+        </FormControl>
         <TitleStyled>
           <img src={details.img} alt={details.name} />
           <h1>{details.name}</h1>
@@ -65,10 +98,18 @@ const Details = ({ match }) => {
         <p>{details.desc}</p>
         <Row id='rows'>
           <Card id='cards'>
-            <Col>Current Price: £{details.cp_gbp}</Col>
+            {currency === 'gbp' ? (
+              <Col>Current Price: £{details.cp_gbp}</Col>
+            ) : (
+              <Col>Current Price: ${details.cp_usd}</Col>
+            )}
           </Card>
           <Card id='cards'>
-            <Col>Market Cap: £{details.mc_gbp}</Col>
+            {currency === 'gbp' ? (
+              <Col>Market Cap: £{details.mc_gbp}</Col>
+            ) : (
+              <Col>Market Cap: ${details.mc_usd}</Col>
+            )}
           </Card>
         </Row>
         <Row id='rows'>
@@ -89,7 +130,7 @@ const Details = ({ match }) => {
         </Row>
       </Container>
 
-      <VisChart chart={chart} details={details} />
+      <VisChart chart={chart} details={details} currency={currency} />
     </DetailStyled>
   );
 };
@@ -115,6 +156,11 @@ const DetailStyled = styled.div`
     width: 40%;
     padding: 1rem;
     margin: 5px;
+  }
+  .dropdown {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
   }
 `;
 export default Details;
