@@ -61,6 +61,7 @@ const Coins = () => {
                 <MenuItem value='usd'>usd</MenuItem>
               </Select>
             </FormControl>
+
             <Subheadings />
 
             {filterCoins.map((coin) => (
@@ -93,9 +94,15 @@ const Coins = () => {
 const CoinsStyled = styled.div`
   .dropdown {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: center;
     margin-top: 10px;
-    margin-left: 76rem;
+  }
+  @media screen and (max-width: 1000px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 774px) {
+    font-size: 10px;
   }
 `;
 const LineStyled = styled.div`

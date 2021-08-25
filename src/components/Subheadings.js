@@ -5,7 +5,7 @@ const Subheadings = () => {
   return (
     <SubHeadingStyled>
       <Row>
-        <Col xs={1}></Col>
+        <Col id='subimg' xs={1}></Col>
         <Col>Name</Col>
         <Col>Symbol</Col>
         <Col>Price</Col>
@@ -22,6 +22,11 @@ const SubHeadingStyled = styled.div`
   margin-top: 20px;
 
   align-items: center;
+  #subimg {
+    @media screen and (max-width: 774px) {
+      display: none;
+    }
+  }
 `;
 
 const LineStyled = styled.div`

@@ -6,6 +6,7 @@ const VisChart = ({ chart, currency }) => {
   return (
     <ChartStyled>
       <XYPlot
+        id='chart'
         width={1500}
         height={500}
         margin={{ left: 100 }}
@@ -29,5 +30,11 @@ const VisChart = ({ chart, currency }) => {
 };
 const ChartStyled = styled.div`
   margin-top: 20px;
+  #chart {
+    @media screen and (max-width: 1000px) {
+      width: 1000px;
+      height: 500px;
+    }
+  }
 `;
 export default VisChart;

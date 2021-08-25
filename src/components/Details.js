@@ -180,12 +180,14 @@ const DetailStyled = styled.div`
     width: 40%;
     padding: 1rem;
     margin: 5px;
+    min-height: 5rem;
+    text-align: center;
   }
   .dropdown {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: center;
     margin-top: 10px;
-    margin-left: 76rem;
   }
 `;
 export default Details;
